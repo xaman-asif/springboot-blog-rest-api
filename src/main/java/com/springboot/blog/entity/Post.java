@@ -13,11 +13,7 @@ import javax.persistence.*;
 @Table(
         name = "posts",
         uniqueConstraints = {
-                @UniqueConstraint(
-                        columnNames = {
-                                "title"
-                        }
-                )
+                @UniqueConstraint(columnNames = {"title"})
         }
 )
 public class Post {

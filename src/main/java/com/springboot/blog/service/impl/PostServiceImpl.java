@@ -3,11 +3,11 @@ package com.springboot.blog.service.impl;
 import com.springboot.blog.entity.Post;
 import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.PostDTO;
+import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.service.PostService;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +32,35 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String orderBy) {
+        Pageable pageable = null;
 
-        List<PostDTO> postResponse = posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        switch (orderBy.toLowerCase()) {
+            case "asc":
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+                break;
+            case "desc":
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+                break;
+            default:
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+                break;
+        }
+
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        List<Post> listOfPosts = posts.getContent();
+
+        List<PostDTO> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+        postResponse.setTotalElements(posts.getTotalElements());
+
 
 //        List<PostDTO> postResponse = new ArrayList<>();
 //
