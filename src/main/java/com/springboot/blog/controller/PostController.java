@@ -20,7 +20,18 @@ public class PostController {
         this.postService = postService;
     }
 
-    // create blog post
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
+
+        PostDTO postDTO = postService.getPostById(id);
+
+        return new ResponseEntity<>(postDTO, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
+        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
@@ -28,8 +39,14 @@ public class PostController {
         return new ResponseEntity<>(postService.createPost(postDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Long id, @RequestBody PostDTO postDTO) {
+
+        return new ResponseEntity<>(postService.updatePost(id, postDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
+        return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
 }
