@@ -6,6 +6,7 @@ import com.springboot.blog.payload.PostDTO;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,8 +17,11 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    private ModelMapper mapper;
+
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {
         this.postRepository = postRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -112,22 +116,26 @@ public class PostServiceImpl implements PostService {
 
 
     private PostDTO mapToDTO(Post post) {
-        PostDTO tempPostDTO = new PostDTO();
 
-        tempPostDTO.setId(post.getId());
-        tempPostDTO.setDescription(post.getDescription());
-        tempPostDTO.setTitle(post.getTitle());
-        tempPostDTO.setContent(post.getContent());
+        PostDTO postDTO = mapper.map(post, PostDTO.class);
 
-        return tempPostDTO;
+//        PostDTO tempPostDTO = new PostDTO();
+//
+//        tempPostDTO.setId(post.getId());
+//        tempPostDTO.setDescription(post.getDescription());
+//        tempPostDTO.setTitle(post.getTitle());
+//        tempPostDTO.setContent(post.getContent());
+
+        return postDTO;
     }
 
     private Post mapToEntity(PostDTO postDTO) {
-        Post post = new Post();
-        post.setId(postDTO.getId());
-        post.setTitle(postDTO.getTitle());
-        post.setDescription(postDTO.getDescription());
-        post.setContent(postDTO.getContent());
+        Post post = mapper.map(postDTO, Post.class);
+
+//        post.setId(postDTO.getId());
+//        post.setTitle(postDTO.getTitle());
+//        post.setDescription(postDTO.getDescription());
+//        post.setContent(postDTO.getContent());
 
         return post;
     }
