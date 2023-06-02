@@ -65,6 +65,9 @@ public class CommentServiceImpl implements CommentService {
                 () -> new ResourceNotFoundException("Comment", "Id", commentId)
         );
 
+//        System.out.println(comment.toString());
+//        System.out.println(comment.getPost().toString());
+
         if (!comment.getPost().getId().equals(post.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to the post");
         }

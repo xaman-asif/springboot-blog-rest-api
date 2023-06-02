@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(
@@ -39,6 +40,6 @@ public class Post {
     )
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 }
