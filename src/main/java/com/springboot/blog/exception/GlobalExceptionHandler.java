@@ -42,18 +42,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception,
-                                                               WebRequest webRequest) {
-        ErrorDetails errorDetails = new ErrorDetails(
-                new Date(),
-                exception.getMessage(),
-                webRequest.getDescription(false)
-        );
-
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
                                                                   WebRequest webRequest) {
@@ -65,5 +53,17 @@ public class GlobalExceptionHandler {
         });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception,
+                                                              WebRequest webRequest) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                new Date(),
+                exception.getMessage(),
+                webRequest.getDescription(false)
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
