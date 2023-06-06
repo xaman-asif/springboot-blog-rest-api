@@ -1,6 +1,6 @@
 package com.springboot.blog.controller;
 
-import com.springboot.blog.payload.PostDTO;
+import com.springboot.blog.payload.DTOs.PostDTO;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.AppConstants;

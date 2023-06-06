@@ -1,4 +1,4 @@
-package com.springboot.blog.payload;
+package com.springboot.blog.payload.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @AllArgsConstructor
 @Getter
-public class ErrorDetails {
+public class ErrorDetailsDTO {
 
     private Date Timestamp;
     private String message;

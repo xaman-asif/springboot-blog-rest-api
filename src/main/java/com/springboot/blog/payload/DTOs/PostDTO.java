@@ -1,10 +1,9 @@
-package com.springboot.blog.payload;
+package com.springboot.blog.payload.DTOs;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

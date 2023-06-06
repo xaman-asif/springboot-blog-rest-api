@@ -1,4 +1,4 @@
-package com.springboot.blog.payload;
+package com.springboot.blog.payload.DTOs;
 
 import com.springboot.blog.entity.Post;
 import lombok.AllArgsConstructor;
