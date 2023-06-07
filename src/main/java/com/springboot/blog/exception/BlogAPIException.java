@@ -8,7 +8,6 @@ public class BlogAPIException extends RuntimeException {
     private String message;
 
     public BlogAPIException(HttpStatus status, String message) {
-        super(message);
         this.status = status;
         this.message = message;
     }

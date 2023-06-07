@@ -65,13 +65,6 @@ public class PostServiceImpl implements PostService {
         postResponse.setLast(posts.isLast());
         postResponse.setTotalElements(posts.getTotalElements());
 
-
-//        List<PostDTO> postResponse = new ArrayList<>();
-//
-//        for (Post post:
-//             posts) {
-//            postResponse.add(mapToDTO(post));
-//        }
         return postResponse;
     }
 
@@ -79,9 +72,7 @@ public class PostServiceImpl implements PostService {
     public PostDTO getPostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
-        PostDTO responseDTO = mapToDTO(post);
-
-        return responseDTO;
+        return mapToDTO(post);
     }
 
     @Override
@@ -89,26 +80,15 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
-        PostDTO responseDTO = null;
-
         Post updatedPost = mapToEntity(updatedPostDTO);
 
         Post tempPost = postRepository.save(updatedPost);
 
-        responseDTO = mapToDTO(tempPost);
-
-//        post.setDescription(updatedPostDTO.getDescription());
-//        post.setTitle(updatedPostDTO.getTitle());
-//        post.setContent(updatedPostDTO.getContent());
-//
-//        return mapToDTO(postRepository.save(post));
-
-        return responseDTO;
+        return mapToDTO(tempPost);
     }
 
-
     @Override
-    public void deletePost(Long id) {
+    public void deletePostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
         postRepository.delete(post);

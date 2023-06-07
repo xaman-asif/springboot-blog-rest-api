@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private PostRepository postRepository;
-
     private ModelMapper mapper;
 
     public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper mapper) {
@@ -38,7 +37,6 @@ public class CommentServiceImpl implements CommentService {
         );
 
 //        System.out.println(comment.toString());
-
         comment.setPost(post);
 
         Comment tempComment = commentRepository.save(comment);
@@ -64,9 +62,6 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new ResourceNotFoundException("Comment", "Id", commentId)
         );
-
-//        System.out.println(comment.toString());
-//        System.out.println(comment.getPost().toString());
 
         if (!comment.getPost().getId().equals(post.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to the post");

@@ -9,8 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -58,7 +62,22 @@ public class PostController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+        postService.deletePostById(id);
         return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
+
+//    @PostMapping("/upload")
+//    public ResponseEntity<String> uploadMedia(@RequestParam("fileName") MultipartFile multipartFile) {
+//        File file = new File(multipartFile.getOriginalFilename());
+//
+//        try (OutputStream os = new FileOutputStream(file)) {
+//            os.write(multipartFile.getBytes());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
+
 }

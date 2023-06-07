@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.Date;
-@Service
+@Component
 public class JwtTokenProvider {
 
     @Value("${app.jwt-secret}")
