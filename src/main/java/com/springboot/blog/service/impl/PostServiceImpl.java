@@ -110,10 +110,10 @@ public class PostServiceImpl implements PostService {
                 break;
         }
 
-        Page<Post> posts = postRepository.findAll(pageable);
-
-//        List<Post> listOfPosts = posts.getContent();
-        List<Post> listOfPosts = postRepository.searchPosts(query);
+//        Page<Post> posts = postRepository.findAll(pageable);
+        
+        Page<Post> posts = postRepository.searchPosts(query, pageable);
+        List<Post> listOfPosts = posts.getContent();
 
         List<PostDTO> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
 
