@@ -66,6 +66,16 @@ public class PostController {
         return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
 
+    @GetMapping("/search/{query}")
+    public ResponseEntity<PostResponse> searchPosts(@PathVariable String query,
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "orderBy", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String orderBy
+    ) {
+        return new ResponseEntity<>(postService.searchPosts(query, pageNo, pageSize, sortBy, orderBy), HttpStatus.OK);
+    }
+
 //    @PostMapping("/upload")
 //    public ResponseEntity<String> uploadMedia(@RequestParam("fileName") MultipartFile multipartFile) {
 //        File file = new File(multipartFile.getOriginalFilename());

@@ -94,6 +94,41 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
+    @Override
+    public PostResponse searchPosts(String query, int pageNo, int pageSize, String sortBy, String orderBy) {
+        Pageable pageable = null;
+
+        switch (orderBy.toLowerCase()) {
+            case "asc":
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+                break;
+            case "desc":
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+                break;
+            default:
+                pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+                break;
+        }
+
+        Page<Post> posts = postRepository.findAll(pageable);
+
+//        List<Post> listOfPosts = posts.getContent();
+        List<Post> listOfPosts = postRepository.searchPosts(query);
+
+        List<PostDTO> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+        postResponse.setTotalElements(posts.getTotalElements());
+
+        return postResponse;
+
+    }
+
 
     private PostDTO mapToDTO(Post post) {
 

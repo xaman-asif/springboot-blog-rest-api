@@ -12,4 +12,6 @@ public interface PostService {
     PostDTO updatePost(Long id, PostDTO updatedPostDTO);
 
     void deletePostById(Long id);
+
+    PostResponse searchPosts(String query, int pageNo, int pageSize, String sortBy, String orderBy);
 }
