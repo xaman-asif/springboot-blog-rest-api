@@ -111,7 +111,7 @@ public class PostServiceImpl implements PostService {
         }
 
 //        Page<Post> posts = postRepository.findAll(pageable);
-        
+
         Page<Post> posts = postRepository.searchPosts(query, pageable);
         List<Post> listOfPosts = posts.getContent();
 
